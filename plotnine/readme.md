@@ -7,7 +7,6 @@ See the following tutorials:
 - [Scatter Plot](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/scatter_plot.ipynb)
 - [Summarized Data Distributions](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/Summarized_Data_Distributions.ipynb)
 
-  
 
   
 
