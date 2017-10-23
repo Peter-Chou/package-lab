@@ -3,9 +3,44 @@ This document shows various ways to use [plotnine package](https://plotnine.read
 See the following tutorials: 
 
 - [Bar Plot](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/bar_plot.ipynb)
+
+  -  Bar Plot with Categorical Variable --- factor()
+  -  Group Bars --- dodge
+  -  Bar Plot of Counts & Bin Width
+  -  Using Color in Bar Plot
+  -  Coloring Negative and Positive Bars Differently
+  -  [Proportional] Stacked Bar Plot
+  -  Bar Plot with Labels
+  -  Dot Plot --- can't use reorder() -_-|
 - [Line Plot](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/line_plot.ipynb)
+  - Points in Line Plot
+  - Line Plot With Multiple Lines
+  - Change the Appearance of Lines
+  - Confidence Region
+  - Stacked Area Graph --- fill can not in order -_-|
 - [Scatter Plot](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/scatter_plot.ipynb)
+  - Mapping Continuous Variable to Color or Size
+  - Skills of Minimizing Overplot (alpha, jitter, boxplot, bin2d)
+  - Adding Fitted Regression Model Lines + annotate
+  - Marginal Rugs in Scatter Plot
+  - Labeling Points in a Scatter Plot
+  - Balloon Plot
 - [Summarized Data Distributions](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/Summarized_Data_Distributions.ipynb)
+  - Histogram
+    - Multiple Histograms from Grouped Data
+  - Density Curve
+  - Frequency Polygon
+  - Box Plot( + stat_summary syntax )
+  - Violin Plot
+  - Dot Plot
+    - Multiple Dot Plots for Grouped Data
+- [Annotations](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/annotations.ipynb)
+  - Text Annotations
+  - Adding Lines
+  - Line Segments, Arrows & Shaded Rectangle
+  - Highlighting an Item
+  - Adding Error Bars
+  - Adding Annotations to Individual Facets
 
 
   
