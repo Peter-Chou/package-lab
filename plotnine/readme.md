@@ -56,7 +56,9 @@ See the following tutorials:
   - Showing Lines Along the Axes
   - Using a Logarithmic Axis
   - Label with Math Format
-  -  Using Dates on an Axis
+  - Using Dates on an Axis
+- [Controlling the Overall Appearance of Graphs](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/Controlling%20the%20Overall%20Appearance%20of%20Graphs.ipynb)
+  - ​
 
 
 
