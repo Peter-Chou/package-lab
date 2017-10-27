@@ -42,9 +42,22 @@ See the following tutorials:
   - Highlighting an Item
   - Adding Error Bars
   - Adding Annotations to Individual Facets
+- [Axes](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/Axes.ipynb)
+  - Swapping X- and Y-Axes --- coord_flip()
+  - Setting the Range of a Continuous Axis
+  - Reversing a Continuous Axis
+  - Setting the Scaling Ratio of the X- and Y-Axes
+  - Removing Tick Marks and Labels
+  - Changing the Text of Tick Labels
+  - Changing the Appearance of Tick Labels
+  - Changing the Text of Axis Labels
+  - Removing Axis Labels
+  - Changing the Appearance of Axis Labels
+  - Showing Lines Along the Axes
+  - Using a Logarithmic Axis
+  - Label with Math Format
+  -  Using Dates on an Axis
 
-
-  
 
 
 
