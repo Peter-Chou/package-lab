@@ -12,6 +12,7 @@ See the following tutorials:
   -  [Proportional] Stacked Bar Plot
   -  Bar Plot with Labels
   -  Dot Plot --- can't use reorder() -_-|
+  -  bar plot with other layers --- When the automatic groups are not sufficient
 - [Line Plot](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/line_plot.ipynb)
   - Points in Line Plot
   - Line Plot With Multiple Lines
