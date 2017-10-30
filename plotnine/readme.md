@@ -58,7 +58,10 @@ See the following tutorials:
   - Label with Math Format
   - Using Dates on an Axis
 - [Controlling the Overall Appearance of Graphs](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/Controlling%20the%20Overall%20Appearance%20of%20Graphs.ipynb)
-  - ​
+  - Setting the Title of a Graph
+  - Changing the Appearance of Text
+  - Changing the Appearance of Theme Elements
+  - Hiding Grid Lines
 
 
 
