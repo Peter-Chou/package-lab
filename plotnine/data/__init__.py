@@ -10,7 +10,7 @@ __all__ = ['pg_mean', 'BOD', 'cabbage_exp', 'diamonds', 'upc',
            'uspopage', 'climate', 'heightweight', 'biopsy',
            'faithful', 'countries', 'birthwt', 'countries2009',
            'PlantGrowth', 'mpg', 'marathon', 'Animals', 'wind',
-           'economics']
+           'economics', 'mtcars']
 
 __all__ = [str(u) for u in __all__]
 _ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -40,3 +40,4 @@ Animals = pd.read_csv(os.path.join(_ROOT, "Animals.csv"), index_col=0)
 wind = pd.read_csv(os.path.join(_ROOT, "wind.csv"), index_col=0)
 economics = pd.read_csv(os.path.join(_ROOT, "economics.csv"), index_col=0)
 economics['date'] = pd.to_datetime(economics['date'])
+mtcars = pd.read_csv(os.path.join(_ROOT, "mtcars.csv"), index_col=0)

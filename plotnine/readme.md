@@ -62,6 +62,14 @@ See the following tutorials:
   - Changing the Appearance of Text
   - Changing the Appearance of Theme Elements
   - Hiding Grid Lines
+- [Legends](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/Legends.ipynb)
+  - Remove the legend for fill
+  - Changing the Position of a Legend
+  - Reversing the Order of Items in a Legend
+  - Changing a Legend Title
+  - Removing a Legend Title
+  - Changing the Labels in a Legend
+  - Changing the Appearance of Legend Labels
 
 
 
