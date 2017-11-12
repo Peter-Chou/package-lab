@@ -58,6 +58,10 @@ See the following tutorials:
   - Using a Logarithmic Axis
   - Label with Math Format
   - Using Dates on an Axis
+- [Facets](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/facets.ipynb)
+  - Splitting Data into Subplots with Facets
+  - Using Facets with Different Axes
+  - Changing the Appearance of Facet Labels and Headers
 - [Controlling the Overall Appearance of Graphs](http://nbviewer.jupyter.org/github/Peter-Chou/package-lab/blob/master/plotnine/Controlling%20the%20Overall%20Appearance%20of%20Graphs.ipynb)
   - Setting the Title of a Graph
   - Changing the Appearance of Text
