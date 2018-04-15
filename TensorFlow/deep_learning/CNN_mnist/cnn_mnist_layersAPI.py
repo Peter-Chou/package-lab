@@ -29,6 +29,8 @@ SKIP_STEP = 5
 mnist = input_data.read_data_sets("MNIST_DATA", validation_size=0)
 
 tf.set_random_seed(SEED)
+# reset the default graph before building
+tf.reset_default_graph()
 
 
 class cnn_mnist:
@@ -45,111 +47,120 @@ class cnn_mnist:
         self._epoch_num = epoch_num
         self._lr = learning_rate
         self.n_classes = 10
-        self._global_step = tf.get_variable("global_step",
-                                            initializer=tf.constant(0),
-                                            trainable=False)
+        if not self._global_step:
+            self._global_step = tf.get_variable("global_step",
+                                                initializer=tf.constant(0),
+                                                trainable=False)
         self._skip_step = SKIP_STEP
         self._keep_rate = tf.constant(0.75)
         self._n_test = 10000
         self._training = True
+
+    def __getattr__(self, attr):
+        return None
 
     def _create_dataset(self):
         """
         setup train / test dataset object
         create general iterator for batch training.
         """
-        with tf.name_scope("data"):
-            # trainset
-            self._trainset = tf.data.Dataset.from_tensor_slices(
-                (self._dataset.train.images.reshape([-1, 28, 28, 1]),
-                    tf.keras.utils.to_categorical(self._dataset.train.labels, 10)))
-            self._trainset = self._trainset.shuffle(10000)
-            self._trainset = self._trainset.batch(self._batch_size)
-            # testset
-            self._testset = tf.data.Dataset.from_tensor_slices(
-                (self._dataset.test.images.reshape([-1, 28, 28, 1]),
-                    tf.keras.utils.to_categorical(self._dataset.test.labels, 10)))
-            self._testset = self._testset.shuffle(10000)
-            self._testset = self._testset.batch(self._batch_size)
-            # iteration
-            iter = tf.data.Iterator.from_structure(self._trainset.output_types,
-                                                   self._trainset.output_shapes)
-            self._inputs, self._targets = iter.get_next()
-            self._train_init_op = iter.make_initializer(self._trainset)
-            self._test_init_op = iter.make_initializer(self._testset)
+        if not self._inputs:
+            with tf.name_scope("data"):
+                # trainset
+                self._trainset = tf.data.Dataset.from_tensor_slices(
+                    (self._dataset.train.images.reshape([-1, 28, 28, 1]),
+                        tf.keras.utils.to_categorical(self._dataset.train.labels, 10)))
+                self._trainset = self._trainset.shuffle(10000)
+                self._trainset = self._trainset.batch(self._batch_size)
+                # testset
+                self._testset = tf.data.Dataset.from_tensor_slices(
+                    (self._dataset.test.images.reshape([-1, 28, 28, 1]),
+                        tf.keras.utils.to_categorical(self._dataset.test.labels, 10)))
+                self._testset = self._testset.shuffle(10000)
+                self._testset = self._testset.batch(self._batch_size)
+                # iteration
+                iter = tf.data.Iterator.from_structure(self._trainset.output_types,
+                                                       self._trainset.output_shapes)
+                self._inputs, self._targets = iter.get_next()
+                self._train_init_op = iter.make_initializer(self._trainset)
+                self._test_init_op = iter.make_initializer(self._testset)
 
     def _create_cnn(self):
         """
         create CNN net structure
         """
-        with tf.name_scope("cnn"):
-            conv1 = tf.layers.conv2d(inputs=self._inputs,
-                                     filters=32,
-                                     kernel_size=[5, 5],
-                                     padding="same",
-                                     activation=tf.nn.relu,
-                                     name="conv1")
-            pool1 = tf.layers.max_pooling2d(inputs=conv1,
-                                            pool_size=[2, 2],
-                                            strides=2,
-                                            name="pool1")
-            conv2 = tf.layers.conv2d(inputs=pool1,
-                                     filters=64,
-                                     kernel_size=[5, 5],
-                                     padding="same",
-                                     activation=tf.nn.relu,
-                                     name="conv2")
-            pool2 = tf.layers.max_pooling2d(inputs=conv2,
-                                            pool_size=[2, 2],
-                                            strides=2,
-                                            name="pool2")
+        if not self._logits:
+            with tf.name_scope("cnn"):
+                conv1 = tf.layers.conv2d(inputs=self._inputs,
+                                         filters=32,
+                                         kernel_size=[5, 5],
+                                         padding="same",
+                                         activation=tf.nn.relu,
+                                         name="conv1")
+                pool1 = tf.layers.max_pooling2d(inputs=conv1,
+                                                pool_size=[2, 2],
+                                                strides=2,
+                                                name="pool1")
+                conv2 = tf.layers.conv2d(inputs=pool1,
+                                         filters=64,
+                                         kernel_size=[5, 5],
+                                         padding="same",
+                                         activation=tf.nn.relu,
+                                         name="conv2")
+                pool2 = tf.layers.max_pooling2d(inputs=conv2,
+                                                pool_size=[2, 2],
+                                                strides=2,
+                                                name="pool2")
 
-            feature_dim = pool2.shape[1] * pool2.shape[2] * pool2.shape[3]
-            pool2 = tf.reshape(pool2, [-1, feature_dim])
-            fc = tf.layers.dense(pool2, 1024, activation=tf.nn.relu, name="fc")
-            dropout = tf.layers.dropout(fc, rate=self._keep_rate,
-                                        training=self._training,
-                                        name="dropout1")
-            self._logits = tf.layers.dense(dropout, units=self.n_classes,
-                                           name="logits")
+                feature_dim = pool2.shape[1] * pool2.shape[2] * pool2.shape[3]
+                pool2 = tf.reshape(pool2, [-1, feature_dim])
+                fc = tf.layers.dense(pool2, 1024, activation=tf.nn.relu, name="fc")
+                dropout = tf.layers.dropout(fc, rate=self._keep_rate,
+                                            training=self._training,
+                                            name="dropout1")
+                self._logits = tf.layers.dense(dropout, units=self.n_classes,
+                                               name="logits")
 
-    def _loss(self):
+    def _loss_function(self):
         """
         create loss tensor operator
         """
-        with tf.name_scope("loss"):
-            entropy = tf.nn.softmax_cross_entropy_with_logits_v2(
-                labels=self._targets,
-                logits=self._logits)
-            self._loss = tf.reduce_mean(entropy, name="loss")
+        if not self._loss:
+            with tf.name_scope("loss"):
+                entropy = tf.nn.softmax_cross_entropy_with_logits_v2(
+                    labels=self._targets,
+                    logits=self._logits)
+                self._loss = tf.reduce_mean(entropy, name="loss")
 
     def _optimize(self):
         """
         create optimization using adam
         """
-        with tf.name_scope("optimize"):
-            self._opt = tf.train.AdamOptimizer(learning_rate=self._lr).minimize(
-                self._loss,
-                global_step=self._global_step)
+        if not self._opt:
+            with tf.name_scope("optimize"):
+                self._opt = tf.train.AdamOptimizer(learning_rate=self._lr).minimize(
+                    self._loss, global_step=self._global_step)
 
     def _summary(self):
         """
         create FileWriter for tensorboard
         """
-        with tf.name_scope("summary"):
-            tf.summary.scalar("loss", self._loss)
-            tf.summary.scalar("accuracy", self._accuracy)
-            tf.summary.scalar("histogram loss", self._loss)
-            self._summary_op = tf.summary.merge_all()
+        if not self._summary_op:
+            with tf.name_scope("summary"):
+                tf.summary.scalar("loss", self._loss)
+                tf.summary.scalar("accuracy", self._accuracy)
+                tf.summary.scalar("histogram_loss", self._loss)
+                self._summary_op = tf.summary.merge_all()
 
     def _eval(self):
         """
         predict the categories
         """
-        with tf.name_scope("predict"):
-            pred = tf.nn.softmax(self._logits)
-            correct_preds = tf.equal(tf.argmax(pred, 1), tf.argmax(self._targets, 1))
-            self._accuracy = tf.reduce_sum(tf.cast(correct_preds, tf.float32))
+        if not self._accuracy:
+            with tf.name_scope("predict"):
+                pred = tf.nn.softmax(self._logits)
+                correct_preds = tf.equal(tf.argmax(pred, 1), tf.argmax(self._targets, 1))
+                self._accuracy = tf.reduce_sum(tf.cast(correct_preds, tf.float32))
 
     def build_graph(self):
         """
@@ -157,7 +168,7 @@ class cnn_mnist:
         """
         self._create_dataset()
         self._create_cnn()
-        self._loss()
+        self._loss_function()
         self._optimize()
         self._eval()
         self._summary()
